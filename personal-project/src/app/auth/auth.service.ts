@@ -7,7 +7,7 @@ import {environment} from "../../environments/environment";
 
 const BACKEND_URL = environment.apiUrl + "/user/"
 
-@Injectable({providerIn: "root"})
+@Injectable({providedIn: "root"})
 export class AuthService{
   private isAuthenticated = false;
   private token: any = null;
@@ -77,7 +77,7 @@ export class AuthService{
   }
 
   // For login form
-  login(username: string, email: string, password: string){
+  login(username: string, password: string){
     const logData:LogData = {username: username, password: password};
     this.http.post<{token: string; expiresIn: number; userId: string}>(
       BACKEND_URL + "login",
