@@ -7,19 +7,41 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {HeaderComponent} from "./header/header.component";
 import {AngularMaterialModule} from "./angular-material.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {CommonModule} from "@angular/common";
+import {LoginComponent} from "./auth/login/login.component";
+import {AuthService} from "./auth/auth.service";
+import { HttpClientModule} from "@angular/common/http";
+import {SignupComponent} from "./auth/signup/signup.component";
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
     AngularMaterialModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthService
+  ],
+  bootstrap: [AppComponent],
+  exports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LoginComponent,
+    SignupComponent
+  ]
 })
-export class AppModule { }
+export class AppModule {
+
+}

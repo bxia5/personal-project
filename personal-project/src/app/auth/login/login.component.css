@@ -1,7 +1,8 @@
-mat-form-field {
+form {
   width: 100%;
 }
 
-mat-spinner {
+form {
+  text-align: center;
   margin: auto;
 }

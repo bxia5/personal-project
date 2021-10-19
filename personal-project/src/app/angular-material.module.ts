@@ -8,7 +8,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatError, MatFormField} from "@angular/material/form-field";
+import {MatFormFieldModule} from "@angular/material/form-field";
+
 
 @NgModule({
   exports: [
@@ -20,8 +21,7 @@ import {MatError, MatFormField} from "@angular/material/form-field";
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatError,
-    MatFormField
+    MatFormFieldModule
   ]
 })
 export class AngularMaterialModule {}
