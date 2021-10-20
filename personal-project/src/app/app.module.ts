@@ -13,13 +13,15 @@ import {LoginComponent} from "./auth/login/login.component";
 import {AuthService} from "./auth/auth.service";
 import { HttpClientModule} from "@angular/common/http";
 import {SignupComponent} from "./auth/signup/signup.component";
+import {ProjectListComponent} from "./projectResource/project/projectList.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    ProjectListComponent
   ],
   imports: [
     BrowserModule,
