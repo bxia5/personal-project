@@ -14,6 +14,8 @@ import {AuthService} from "./auth/auth.service";
 import { HttpClientModule} from "@angular/common/http";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {ProjectListComponent} from "./projectResource/project/projectList.component";
+import {ProjectComponent} from "./projectResource/project/project.component";
+import {ResourceListComponent} from "./projectResource/resource/resourceList.components";
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import {ProjectListComponent} from "./projectResource/project/projectList.compon
     HeaderComponent,
     LoginComponent,
     SignupComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectComponent,
+    ResourceListComponent
   ],
   imports: [
     BrowserModule,

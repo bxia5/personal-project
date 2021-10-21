@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {AuthData, LogData} from "./auth-data.model";
 import {environment} from "../../environments/environment";
+import {ProjectResourceService} from "../projectResource/projectResource.service";
 
 const BACKEND_URL = environment.apiUrl + "/user/"
 
@@ -18,7 +19,7 @@ export class AuthService{
   private password: any = null;
   private authStatusListener = new Subject<Boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private projectService: ProjectResourceService) {}
 
   /*getToken(){
     return this.token;
@@ -60,7 +61,7 @@ export class AuthService{
     this.userId = null;
     //clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(["/"]);
+    this.router.navigate(["/auth/login"]);
   }
 
   /*private setAuthTimer(duration: number) {
@@ -92,6 +93,7 @@ export class AuthService{
           this.password = this.obj.password;
           //console.log(this.userId);
           this.authStatusListener.next(true);
+          this.projectService.createProject(this.userId, this.username + "-project");
         }
         this.router.navigate(["/"]);
       },
@@ -144,20 +146,21 @@ export class AuthService{
   }
 
   private getAuthData(){
-    const token = localStorage.getItem('username');
+    const username = localStorage.getItem('username');
     //const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
-    if (this.username == null){
+    if (username == null){
       return;
     }
     return {
-      username: this.username,
+      username: username,
       //expirationDate: new Date(expirationDate),
       userId: userId
     };
   }
 
   autoAuthUser() {
+    this.logout();
     const authInfo = this.getAuthData();
     if (!authInfo)
       return;

@@ -17,7 +17,11 @@ ul {
   flex: 1 1 auto;
 }
 
-h1 {
+.nave {
+  text-align: left;
   margin: auto;
-  align-content: center;
 }
+
+
+
+

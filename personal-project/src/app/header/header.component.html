@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <span>
-    <a routerLink="/">PersonalProjects</a>
+    <a routerLink="/">Resource Management</a>
   </span>
   <span class="spacer"></span>
   <ul>
@@ -15,4 +15,18 @@
     </li>
   </ul>
 </mat-toolbar>
-<h1 *ngIf="userIsAuthenticated" >Welcome {{username}}</h1>
+
+<mat-toolbar color="primary" class="nave" *ngIf="userIsAuthenticated">
+  <ul class="nave">
+    <li >
+      <a mat-button routerLink="/" routerLinkActive="mat-accent">Resources</a>
+    </li>
+    <li >
+      <a mat-button routerLink="projectList" routerLinkActive="mat-accent">MyProjects</a>
+    </li>
+    <li>
+      <a mat-button routerLink="" routerLinkActive="mat-accent">Others</a>
+    </li>
+  </ul>
+</mat-toolbar>
+<h1 *ngIf="userIsAuthenticated" style="text-align: center; margin: auto ">Welcome {{username}}</h1>

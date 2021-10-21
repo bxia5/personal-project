@@ -1,0 +1,19 @@
+<table>
+<thead>
+<tr>
+  <th>ResourceName</th>
+  <th>ResourceCode</th>
+</tr>
+</thead>
+  <tbody>
+  <tr *ngFor = "let resource of projectService.allResources">
+    <td>{{resource.name}}</td>
+    <td>{{resource.resourceCode}}</td>
+  </tr>
+  </tbody>
+</table>
+<form [formGroup]="resourceForm"  (ngSubmit) = "addToAll()">
+  <p>Resource name: <input formControlName = "name" type = "text" required/>
+    Resource code: <input formControlName = "code" type = "text" required/>
+    <button type = "submit" [disabled] = resourceForm.invalid>Add New Resource</button></p>
+</form>
