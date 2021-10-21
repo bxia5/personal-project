@@ -17,6 +17,10 @@ export class ProjectComponent implements OnInit, OnDestroy{
   constructor(public authService: AuthService, public projectService: ProjectResourceService,
               private fb:FormBuilder, private route:ActivatedRoute, private router:Router) {}
 
+  editProject(){
+    this.router.navigate(["/project-edit"]);
+  }
+
   ngOnInit(): void {
     this.projectService.getProject(this.projectService.projectId);
   }

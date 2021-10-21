@@ -1,0 +1,37 @@
+<h2>Project Name: {{projectService.project.name}}</h2>
+<h2><button  (click) = "back()">Back to Project</button></h2>
+<table>
+  <thead>
+  <tr>
+    <th>All Resources</th>
+    <th>Project Resources</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>
+      <ol>
+        <li class = "edit" *ngFor = "let resource of projectService.allResources">
+          {{resource.name}}
+        </li>
+      </ol>
+    </td>
+    <td>
+      <ol>
+        <li class = "edit" *ngFor = "let resource of projectService.resources">
+          {{resource.name}}
+        </li>
+      </ol>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<form [formGroup]="addForm"  (ngSubmit) = "add()">
+  <p>Resource index: <input formControlName = "index" type = "text" required/>
+    <button type = "submit" [disabled] = addForm.invalid>Add Resource</button></p>
+</form>
+
+<form [formGroup]="removeForm"  (ngSubmit) = "remove()">
+  <p>Resource index: <input formControlName = "index" type = "text" required/>
+    <button type = "submit" [disabled] = removeForm.invalid>Remove Resource</button></p>
+</form>

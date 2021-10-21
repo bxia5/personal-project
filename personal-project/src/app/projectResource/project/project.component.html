@@ -1,2 +1,17 @@
-<h1>{{projectService.project.name}}</h1>
-{{projectService.resources | json}}
+<h2>Project Name: {{projectService.project.name}}</h2>
+
+<table>
+	<thead>
+<tr>
+  <th>ResourceName</th>
+  <th>ResourceCode</th>
+</tr>
+</thead>
+<tbody>
+<tr *ngFor = "let resource of projectService.resources">
+  <td>{{resource.name}}</td>
+  <td>{{resource.resourceCode}}</td>
+</tr>
+</tbody>
+</table>
+<h2><button  (click) = "editProject()">Edit Project</button></h2>

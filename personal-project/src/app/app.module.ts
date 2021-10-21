@@ -16,6 +16,7 @@ import {SignupComponent} from "./auth/signup/signup.component";
 import {ProjectListComponent} from "./projectResource/project/projectList.component";
 import {ProjectComponent} from "./projectResource/project/project.component";
 import {ResourceListComponent} from "./projectResource/resource/resourceList.components";
+import {ProjectEditComponent} from "./projectResource/project/projectEdit.component";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {ResourceListComponent} from "./projectResource/resource/resourceList.com
     SignupComponent,
     ProjectListComponent,
     ProjectComponent,
+    ProjectEditComponent,
     ResourceListComponent
   ],
   imports: [

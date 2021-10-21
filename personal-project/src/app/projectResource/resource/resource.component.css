@@ -1,5 +1,16 @@
+form {
+  width: 100%;
+}
+form {
+  text-align: center;
+  margin: auto;
+}
 table {
 	text-align: center;
 	margin: auto;
   border: 2px;
+}
+td {
+  text-align: left;
+  margin: auto;
 }

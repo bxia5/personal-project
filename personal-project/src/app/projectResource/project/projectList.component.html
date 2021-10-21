@@ -19,6 +19,7 @@
   <p>Project index: <input formControlName = "index" type = "text" required/>
     <button type = "submit" [disabled] = reviewForm.invalid>Review Project</button></p>
 </form>
+
 <form [formGroup]="deleteForm"  (ngSubmit) = "delete()">
   <p>Project index: <input formControlName = "index" type = "text" required/>
     <button type = "submit" [disabled] = reviewForm.invalid>Delete Project</button></p>

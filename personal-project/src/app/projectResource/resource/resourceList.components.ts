@@ -35,8 +35,7 @@ export class ResourceListComponent implements OnInit, OnDestroy{
   }
 
   addToAll(){
-
-
+    this.projectService.createResource(this.resourceForm.value.name, this.resourceForm.value.code);
   }
   ngOnDestroy(): void {
 

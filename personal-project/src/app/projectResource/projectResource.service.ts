@@ -15,6 +15,7 @@ export class ProjectResourceService{
 
   resourcesReady: Boolean = false;
   obj: any;
+  resourceObj: any = null;
   projects: any;
   resources: any;
   allResources: any;
@@ -72,7 +73,7 @@ export class ProjectResourceService{
   }
 
 
-  async getResources(projectId: number){
+  getResources(projectId: number){
     const resourcesQueryPath = PROJECT_URL + "/allResources?" + "projectId=" + projectId.toString();
     //this.resources = this.http.get(resourcesQueryPath).toPromise();
     this.http.get(resourcesQueryPath).subscribe(
@@ -100,7 +101,23 @@ export class ProjectResourceService{
   }
 
   createResource(name: string, code: string){
+    this.http.request('POST', RESOURCE_URL + "?name=" + name).subscribe(
+      (res) => {
+        this.resourceObj = res;
+        let id = this.resourceObj[this.resourceObj.length - 1].id;
+        this.resourceObj = null;
+        console.log(id);
+        this.http.request('PUT', RESOURCE_URL + "?name=" + name + "&id=" + id + "&code=" + code
+        ).subscribe(
+          (res) =>{
+            this.getAllResources();
+          },
+          (error) =>{}
+        );
 
+      },
+      (error) => {}
+    )
 
   }
 
@@ -145,21 +162,28 @@ export class ProjectResourceService{
 
   async deleteProject(projectId: number, userId: number){
 
-      await this.getResources(projectId);
-      console.log(this.resources);
-      //while(this.resources.length > 1){
-      //  this.removeResource(projectId, this.resources[0].id);
-      //}
-      //this.resourceControl = false;
-      //this.removeResource(projectId, this.resources[0].id);
-
-      //this.http.request('DELETE', PROJECT_URL  + "?" + "id=" + projectId.toString()).subscribe(
-      //  (res) => {
-      //    this.resourceControl = true;
-      //    console.log("Success to delete the project.");
-      //    this.getProjects(userId);
-      //  }
-      //)
+    const resourcesQueryPath = PROJECT_URL + "/allResources?" + "projectId=" + projectId.toString();
+    //this.resources = this.http.get(resourcesQueryPath).toPromise();
+    this.http.get(resourcesQueryPath).subscribe(
+      (res) =>{
+        this.resources = res;
+        while(this.resources.length > 1){
+          this.removeResource(projectId, this.resources[0].id);
+        }
+        this.resourceControl = false;
+        this.removeResource(projectId, this.resources[0].id);
+  
+        this.http.request('DELETE', PROJECT_URL  + "?" + "id=" + projectId.toString()).subscribe(
+          (res) => {
+            this.resourceControl = true;
+           console.log("Success to delete the project.");
+           this.getProjects(userId);
+          }
+        )
+      },
+      (error) => {this.resources = null}
+    )
+      
   }
 
 }
