@@ -7,13 +7,11 @@ import {Router} from "@angular/router";
 
 const PROJECT_URL = environment.apiUrl + "/projects";
 const RESOURCE_URL = environment.apiUrl + "/resources";
-
-
+const COLUMN_URL = environment.apiUrl + "/project_columns";
 
 @Injectable({providedIn: "root"})
 export class ProjectResourceService{
 
-  resourcesReady: Boolean = false;
   obj: any;
   resourceObj: any = null;
   projects: any;
@@ -21,6 +19,8 @@ export class ProjectResourceService{
   allResources: any;
   projectId: any = null;
   project: any = "";
+  column: any;
+  columns: any;
   private resourceControl: Boolean = true;
   private projectStatusListener = new Subject<Boolean>();
   public sub: Subject<any> = new Subject();
@@ -160,8 +160,7 @@ export class ProjectResourceService{
     )
   }
 
-  async deleteProject(projectId: number, userId: number){
-
+  deleteProject(projectId: number, userId: number){
     const resourcesQueryPath = PROJECT_URL + "/allResources?" + "projectId=" + projectId.toString();
     //this.resources = this.http.get(resourcesQueryPath).toPromise();
     this.http.get(resourcesQueryPath).subscribe(
@@ -172,7 +171,7 @@ export class ProjectResourceService{
         }
         this.resourceControl = false;
         this.removeResource(projectId, this.resources[0].id);
-  
+
         this.http.request('DELETE', PROJECT_URL  + "?" + "id=" + projectId.toString()).subscribe(
           (res) => {
             this.resourceControl = true;
@@ -183,7 +182,31 @@ export class ProjectResourceService{
       },
       (error) => {this.resources = null}
     )
-      
+  }
+
+  getColumns(){
+    this.http.get(COLUMN_URL).subscribe(
+      (res) =>{
+        this.columns = res;
+      },
+      (error) =>{}
+    )
+  }
+
+  addColumn(name: string, formula: string){
+    this.http.request('POST', COLUMN_URL + "?name=" + name + "&formula=" + formula
+    ).subscribe(
+      res =>this.getColumns(),
+      error => {}
+    )
+  }
+
+  dropColumn(name: string){
+      this.http.request('DELETE', COLUMN_URL + "?name=" + name).subscribe(
+        res => this.getColumns(),
+        error => {
+        }
+      )
   }
 
 }

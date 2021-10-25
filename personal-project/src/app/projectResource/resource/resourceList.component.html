@@ -1,4 +1,8 @@
 <table>
+<tr>
+  <td>
+
+<table>
 <thead>
 <tr>
   <th>ResourceName</th>
@@ -9,11 +13,48 @@
   <tr *ngFor = "let resource of projectService.allResources">
     <td>{{resource.name}}</td>
     <td>{{resource.resourceCode}}</td>
+
   </tr>
   </tbody>
 </table>
-<form [formGroup]="resourceForm"  (ngSubmit) = "addToAll()">
+</td>
+
+<td>
+  <table >
+    <thead>
+      <tr >
+        <th *ngFor = "let column of projectService.columns">{{column.columnName}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tbody>
+  <tr *ngFor = "let resource of projectService.allResources">
+    <td *ngFor = "let column of projectService.columns"><input class = "newValue" type = 'text'></td>
+  </tr>
+    </tbody>
+  </table>
+</td>
+</tr>
+</table>
+
+<form *ngIf = "!addRow&&!addColumn">
+  <button (click) = "addARow()">Add a row</button>
+  <button (click) = "addAColumn()">Add a column</button>
+</form>
+<form *ngIf = "addRow" [formGroup]="resourceForm"  (ngSubmit) = "addToAll()">
   <p>Resource name: <input formControlName = "name" type = "text" required/>
     Resource code: <input formControlName = "code" type = "text" required/>
     <button type = "submit" [disabled] = resourceForm.invalid>Add New Resource</button></p>
 </form>
+<form *ngIf = "addColumn" [formGroup]="columnForm"  (ngSubmit) = "createColumn()">
+<p>Column name: <input formControlName = "name" type = "text" required/>
+  Formula: <input formControlName = "formula" type = "text" required/>
+  <button type = "submit" [disabled] = columnForm.invalid>Add New Column</button></p>
+</form>
+<form *ngIf = "addColumn" [formGroup]="removeForm"  (ngSubmit) = "dropColumn()">
+  <p>Column name: <input formControlName = "name" type = "text" required/>
+    <button type = "submit" [disabled] = removeForm.invalid>Remove Column</button></p>
+</form>
+<p *ngIf = "error" class = "error">Error: {{errorMessage}}</p>
+<form *ngIf = "addRow||addColumn"><button (click) = "back()">Back</button><form>
+
