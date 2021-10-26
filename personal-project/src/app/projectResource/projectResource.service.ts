@@ -19,7 +19,7 @@ export class ProjectResourceService{
   allResources: any;
   projectId: any = null;
   project: any = "";
-  column: any;
+  projectColumns: any;
   columns: any;
   private resourceControl: Boolean = true;
   private projectStatusListener = new Subject<Boolean>();
@@ -165,20 +165,27 @@ export class ProjectResourceService{
     //this.resources = this.http.get(resourcesQueryPath).toPromise();
     this.http.get(resourcesQueryPath).subscribe(
       (res) =>{
-        this.resources = res;
-        while(this.resources.length > 1){
-          this.removeResource(projectId, this.resources[0].id);
-        }
+        let allR: any = res;
         this.resourceControl = false;
+        for(let i = 1; i < allR.length; i++)
+          this.removeResource(projectId, allR[i].id);
+
         this.removeResource(projectId, this.resources[0].id);
 
-        this.http.request('DELETE', PROJECT_URL  + "?" + "id=" + projectId.toString()).subscribe(
-          (res) => {
-            this.resourceControl = true;
-           console.log("Success to delete the project.");
-           this.getProjects(userId);
-          }
-        )
+        const url = COLUMN_URL + "/project?id=" + projectId.toString();
+        this.http.get(url).subscribe(
+          (res) =>{
+            let columnList: any = res;
+            for(let i = 0; i < columnList.length; i++) {
+                this.dropColumn(columnList[i].columnName);
+              }
+            this.http.request('DELETE', PROJECT_URL  + "?" + "id=" + projectId.toString()).subscribe(
+              (res) => {
+                this.resourceControl = true;
+                console.log("Success to delete the project.");
+                this.getProjects(userId);
+              })
+          })
       },
       (error) => {this.resources = null}
     )
@@ -193,6 +200,34 @@ export class ProjectResourceService{
     )
   }
 
+  getProjectColumns(){
+    const url = COLUMN_URL + "/project?id=" + this.projectId;
+    this.http.get(url).subscribe(
+      (res) =>{
+        this.projectColumns = res;
+      },
+      (error) =>{}
+    )
+  }
+
+  addProjectColumn(name: string, formula: string){
+    this.http.request('POST', COLUMN_URL + "?name=" + name + "&formula=" + formula
+    ).subscribe(
+      res =>{
+        let obj: any = res;
+        const url = COLUMN_URL + "/assignColumn?projectId=" + this.projectId + "&columnId=" + obj.id.toString();
+        this.http.request('Post', url).subscribe(
+          res =>{
+            this.getProjectColumns();
+            this.getColumns();
+          },
+          error => {}
+        )
+      },
+      error => {}
+    )
+  }
+
   addColumn(name: string, formula: string){
     this.http.request('POST', COLUMN_URL + "?name=" + name + "&formula=" + formula
     ).subscribe(
@@ -203,7 +238,11 @@ export class ProjectResourceService{
 
   dropColumn(name: string){
       this.http.request('DELETE', COLUMN_URL + "?name=" + name).subscribe(
-        res => this.getColumns(),
+        res => {this.getColumns();
+        if(this.projectId){
+          this.getProjectColumns();
+        }
+        },
         error => {
         }
       )

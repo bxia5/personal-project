@@ -1,5 +1,7 @@
 <h2>Project Name: {{projectService.project.name}}</h2>
-
+<table>
+<tr>
+<td>
 <table>
 	<thead>
 <tr>
@@ -14,4 +16,34 @@
 </tr>
 </tbody>
 </table>
-<h2><button  (click) = "editProject()">Edit Project</button></h2>
+</td>
+<td>
+  <table >
+    <thead>
+    <tr >
+      <th *ngFor = "let column of projectService.projectColumns">{{column.columnName}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tbody>
+    <tr *ngFor = "let resource of projectService.resources">
+      <td *ngFor = "let column of projectService.projectColumns"><input class = "newValue" type = 'text'></td>
+    </tr>
+    </tbody>
+  </table>
+</td>
+</tr>
+</table>
+<h2 *ngIf="!addColumn"><button  (click) = "editProject()">Edit Project</button><button  (click) = "editColumn()">Edit Column</button></h2>
+
+<form *ngIf = "addColumn" [formGroup]="columnForm"  (ngSubmit) = "createColumn()">
+  <p>Column name: <input formControlName = "name" type = "text" required/>
+    Formula: <input formControlName = "formula" type = "text" required/>
+    <button type = "submit" [disabled] = columnForm.invalid>Add New Column</button></p>
+</form>
+<form *ngIf = "addColumn" [formGroup]="removeForm"  (ngSubmit) = "dropColumn()">
+  <p>Column name: <input formControlName = "name" type = "text" required/>
+    <button type = "submit" [disabled] = removeForm.invalid>Remove Column</button></p>
+</form>
+<p *ngIf = "error" class = "error">Error: {{errorMessage}}</p>
+<form *ngIf = "addColumn"><button (click) = "back()">Back</button><form>

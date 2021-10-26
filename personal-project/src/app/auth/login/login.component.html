@@ -1,6 +1,12 @@
 <form [formGroup]="logForm"  (ngSubmit) = "logIn()">
   <p>Username: <input formControlName = "username" type = "text"/></p>
+  <div *ngIf = "!logForm.controls.username.valid && (logForm.controls.username.touched || logForm.controls.username.dirty)" class = "errorMes">
+    The length of username is between 2 and 30.
+  </div>
   <p>Password: <input formControlName= "password" type = "password"/></p>
+  <div *ngIf = "!logForm.controls.password.valid && (logForm.controls.password.touched || logForm.controls.password.dirty)" class = "errorMes">
+    The length of password is between 2 and 30.
+  </div>
   <p><button type = "submit" [disabled] = logForm.invalid>Login</button><button (click) = "goToSignup()">SignUp</button></p>
 </form>
 

@@ -14,7 +14,10 @@ export class LoginComponent implements OnInit, OnDestroy{
   private authStatusSub: Subscription = new Subscription();
   constructor(public authService: AuthService, private fb:FormBuilder, private route:ActivatedRoute, private router:Router) { }
 
-  logForm: any;
+  logForm = new FormGroup({
+    username: new FormControl(),
+    password: new FormControl()
+  });
   ngOnInit(): void {
 
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(

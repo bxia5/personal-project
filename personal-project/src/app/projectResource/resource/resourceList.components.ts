@@ -19,7 +19,6 @@ export class ResourceListComponent implements OnInit, OnDestroy{
   removeForm: any;
   addRow: Boolean = false;
   addColumn: Boolean = false;
-  numColumn: number = 0;
   errorMessage: string = "";
   error: Boolean = false;
 

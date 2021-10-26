@@ -1,7 +1,16 @@
 <form [formGroup]="signupForm"  (ngSubmit) = "signUp()">
   <p>E-mail: <input formControlName = "email" type = "email"></p>
+  <div *ngIf = "!signupForm.controls.email.valid && (signupForm.controls.email.touched || signupForm.controls.email.dirty)" class = "errorMes">
+    Format is not correct.
+  </div>
   <p>Username: <input formControlName = "username" type = "text"/></p>
+  <div *ngIf = "!signupForm.controls.username.valid && (signupForm.controls.username.touched || signupForm.controls.username.dirty)" class = "errorMes">
+    The length of username is between 2 and 30.
+  </div>
   <p>Password: <input formControlName= "password" type = "password"/></p>
+  <div *ngIf = "!signupForm.controls.password.valid && (signupForm.controls.password.touched || signupForm.controls.password.dirty)" class = "errorMes">
+    The length of password is between 2 and 30.
+  </div>
   <p><button type = "submit" [disabled] = signupForm.invalid>SignUp</button></p>
 </form>
 

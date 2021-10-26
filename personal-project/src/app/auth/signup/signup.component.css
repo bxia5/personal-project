@@ -6,3 +6,8 @@ form {
   text-align: center;
   margin: auto;
 }
+.errorMes {
+  text-align: center;
+  margin: auto;
+  color: red;
+}

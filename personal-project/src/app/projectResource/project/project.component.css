@@ -43,3 +43,13 @@ button {
   text-align: left;
   margin: auto;
 }
+
+.newValue {
+  height: 10px;
+}
+
+.error {
+  text-align: center;
+  margin: auto;
+  color: red;
+}

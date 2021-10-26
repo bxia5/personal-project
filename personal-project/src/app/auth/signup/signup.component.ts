@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription} from "rxjs";
 
 import {AuthService} from "../auth.service";
-import {FormBuilder, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-signup',
@@ -17,7 +17,11 @@ export class SignupComponent implements OnInit, OnDestroy {
 
 
 
-  signupForm: any;
+  signupForm = new FormGroup({
+    email: new FormControl(),
+    username: new FormControl(),
+    password: new FormControl()
+  });
   ngOnInit(): void {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(
       authStatus => {

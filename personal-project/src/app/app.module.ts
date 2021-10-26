@@ -11,12 +11,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {LoginComponent} from "./auth/login/login.component";
 import {AuthService} from "./auth/auth.service";
-import { HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {SignupComponent} from "./auth/signup/signup.component";
 import {ProjectListComponent} from "./projectResource/project/projectList.component";
 import {ProjectComponent} from "./projectResource/project/project.component";
 import {ResourceListComponent} from "./projectResource/resource/resourceList.components";
 import {ProjectEditComponent} from "./projectResource/project/projectEdit.component";
+import {ProjectResourceService} from "./projectResource/projectResource.service";
+import {HttpInter} from "./interceptor.service";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,11 @@ import {ProjectEditComponent} from "./projectResource/project/projectEdit.compon
     AngularMaterialModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    ProjectResourceService,
+    {
+      provide: HTTP_INTERCEPTORS, useClass: HttpInter, multi:true
+    }
   ],
   bootstrap: [AppComponent],
   exports: [
